@@ -1,0 +1,36 @@
+// Code 
+module dff1(clk,rst,d,q);
+  input clk,rst,d;
+  output reg q;
+  always@(posedge clk)begin 
+    if(rst==1) q<=0;
+    else q<=d;
+  end
+endmodule
+
+// Code your testbench here
+module tb;
+  reg clk,rst,d;
+  wire q;
+  dff1 dut(clk,rst,d,q);
+  always begin
+    clk=0; #5;
+    clk=1; #5;
+  end
+  initial begin
+    rst=1;
+    d<=0;
+    #100;
+    rst=0;
+    d<=1;
+    #100;
+    d<=0;
+    #100;
+    d<=1;
+    $finish;
+  end
+  initial begin
+    $dumpfile("dff1.vcd");
+    $dumpvars();
+  end
+endmodule
